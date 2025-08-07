@@ -130,7 +130,7 @@ function createPlayerCard(player, rank) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('CesiumList!');
+    console.log('CesiumList 0.1!');
     console.log('________00000000000___________000000000000_________');
     console.log('______00000000_____00000___000000_____0000000______');
     console.log('____0000000_____________000______________00000_____');
