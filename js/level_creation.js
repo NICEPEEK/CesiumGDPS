@@ -189,7 +189,6 @@ async function saveNewLevel() {
     const idInput = document.getElementById('new-level-id').value.trim();
     const name = document.getElementById('new-name').value.trim();
     const phase = parseInt(document.getElementById('new-phase').value);
-    const ggdlPhase = parseInt(document.getElementById('new-ggdl-phase').value) || 0;
     const points = parseFloat(document.getElementById('new-points').value) || 0;
     const listPercent = parseFloat(document.getElementById('new-percent').value) || 100;
     const skills = document.getElementById('new-skills').value
@@ -216,7 +215,6 @@ async function saveNewLevel() {
         id: levelId,
         name,
         phase,
-        ggdl_phase: ggdlPhase,
         points,
         list_percent: listPercent,
         skill_sets: skills,

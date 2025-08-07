@@ -76,7 +76,6 @@ function updateLevelPage(level, position) {
     document.querySelector('.level-name').textContent = level.name;
     document.querySelector('.level-phase').textContent = `Phase ${level.phase}`;
     document.getElementById('level-id').textContent = `ID: ${level.id}`;
-    document.querySelectorAll('.info-card')[0].querySelector('.info-value').textContent = level.ggdl_phase || 'N/A';
     document.querySelectorAll('.info-card')[1].querySelector('.info-value').textContent = 
         level.players && level.players[0] ? level.players[0].id : 'Unknown';
 document.querySelectorAll('.info-card')[2].querySelector('.info-value').textContent = 

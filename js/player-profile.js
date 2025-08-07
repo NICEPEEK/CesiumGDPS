@@ -16,11 +16,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function loadPlayerProfile(username) {
     try {
-        const [playerData, allLevels, order] = await Promise.all([
+        const [playerData, allLevels, order] = await Promise.all([ 
             fetchPlayerData(username),
             fetch('https://nicepeek.alex-bugrov104.workers.dev/api/levels').then(res => res.json()),
             fetch('https://nicepeek.alex-bugrov104.workers.dev/api/order').then(res => res.json())
         ]);
+
+        console.log('Player Data:', playerData); // Проверка данных
 
         const levelPositions = {};
         order.forEach((levelId, index) => {
@@ -33,6 +35,7 @@ async function loadPlayerProfile(username) {
 
         renderPlayerProfile(playerData, allLevels);
     } catch (error) {
+        console.error('Error loading profile:', error);
         document.getElementById('player-profile-container').innerHTML = `
             <div class="error-message">
                 Failed to load player profile: ${error.message}
@@ -59,16 +62,17 @@ async function fetchPlayerData(username) {
         orderResponse.json()
     ]);
 
-const playerRecords = [];
-levels.forEach(level => {
-    const record = level.players?.find(p => p.id === username);
-    if (record) {
-        playerRecords.push({ level, record });
+    const playerRecords = [];
+    levels.forEach(level => {
+        const record = level.players?.find(p => p.id === username);
+        if (record) {
+            playerRecords.push({ level, record });
+        }
+    });
+
+    if (playerRecords.length === 0) {
+        throw new Error('Player not found');
     }
-});
-if (playerRecords.length === 0) {
-    throw new Error('Player not found');
-}
 
     const levelsMap = new Map(levels.map(level => [level.id, level]));
 
@@ -76,9 +80,6 @@ if (playerRecords.length === 0) {
         points: 0,
         completions: 0,
         progresses: 0,
-        osc: 0,
-        attemptsFor1Point: 0,
-        limitPercent: 0
     };
 
     const completedLevels = [];
@@ -120,10 +121,10 @@ if (playerRecords.length === 0) {
     const user = {
         username,
         role: 'user',
-        avatar: undefined,
-        banner: undefined,
-        country: undefined,
-        description: undefined
+        avatar: '', // Default avatar
+        banner: '',
+        country: '',
+        description: '',
     };
 
     return {
@@ -190,18 +191,6 @@ function renderPlayerProfile(playerData, allLevels) {
                 <div class="stat-value">${playerData.stats.progresses}</div>
                 <div class="stat-label">Progress Levels</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value">${playerData.osc?.toFixed(2) || '0.00'}</div>
-                <div class="stat-label">OSC</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">${playerData.attempts_for_1?.toFixed(0) || '0'}</div>
-                <div class="stat-label">Attempts for 1 point level</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">${playerData.limit_percent?.toFixed(2) || '0.00'}%</div>
-                <div class="stat-label">LIMIT%</div>
-            </div>
         </div>
     `;
     
@@ -253,13 +242,13 @@ function renderPlayerProfile(playerData, allLevels) {
 function createLevelCard(level) {
     const imgSrc = level.players?.[0]?.video_link 
         ? `https://img.youtube.com/vi/${extractYouTubeId(level.players[0].video_link)}/mqdefault.jpg`
-        : '';
-    
+        : 'https://via.placeholder.com/150';  // Резервное изображение
+
     return `
         <div class="level-card clickable-level" data-id="${level.id}">
             <div class="level-preview">
                 <div class="level-position">${level.position}</div>
-                <img src="${imgSrc}" alt="${level.name}" loading="lazy" onerror="this.src=''">
+                <img src="${imgSrc}" alt="${level.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150'"> <!-- Резервная картинка -->
             </div>
             <div class="level-info">
                 <div class="level-name">${level.name}</div>
@@ -277,13 +266,13 @@ function createLevelCard(level) {
 function createProgressLevelCard(level) {
     const imgSrc = level.players?.[0]?.video_link 
         ? `https://img.youtube.com/vi/${extractYouTubeId(level.players[0].video_link)}/mqdefault.jpg`
-        : '';
-    
+        : 'https://via.placeholder.com/150';  // Резервное изображение
+
     return `
         <div class="level-card clickable-level" data-id="${level.id}">
             <div class="level-preview">
                 <div class="level-position ${level.position === 1 ? 'first-place' : ''}">${level.position}</div>
-                <img src="${imgSrc}" alt="${level.name}" loading="lazy" onerror="this.src=''">
+                <img src="${imgSrc}" alt="${level.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150'"> <!-- Резервная картинка -->
             </div>
             <div class="level-info">
                 <div class="level-name">${level.name} <span class="progress-percent">(${level.record?.progress || 0}%)</span></div>
