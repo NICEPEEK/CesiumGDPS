@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CesiumList</title>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/siderbar.css">
+    <link rel="stylesheet" href="/css/modal.css">
+    <link rel="stylesheet" href="/css/content.css">
+    <link rel="stylesheet" href="/css/notification.css">
+    <link rel="stylesheet" href="/css/records.css">
+    <link rel="stylesheet" href="../css/level.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">DEMON LIST</div>
+            <nav class="menu">
+                <button class="menu-item" data-tab="demon-list">Return to list</button>
+                <a href="https://discord.gg/eq3KRf2V" class="discord-btn" target="_blank">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <div class="level-main-info">
+                <div class="level-position">#ХУЙНЯ</div>
+                <div class="level-name-phase">
+                    <h1 class="level-name">Tartarus</h1>
+                    <div class="level-phase-container">
+                        <span class="level-phase">Phase 11</span>
+                    </div>
+                </div>
+                <div class="level-id" id="level-id">ID: 59075347</div>
+            </div>
+            <div class="info-row">
+                <div class="info-card">
+                    <div class="info-label">GGDL Phase</div>
+                    <div class="info-value">34</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Verified by</div>
+                    <div class="info-value">tamt.q</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Skill-sets</div>
+                    <div class="info-value">ship, timings</div>
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-card">
+                    <div class="info-label">Points</div>
+                    <div class="info-value">195.2</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">LIST%</div>
+                    <div class="info-value">52%</div>
+                </div>
+                <div class="info-card empty">
+                </div>
+            </div>
+
+            <div class="video-container">
+                <div class="video-wrapper" id="first-completion-video">
+                    <div class="video-placeholder">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="records-container">
+                <div class="records-section">
+                    <div class="section-title">TOTAL RECORDS (<span id="records-count">1</span>)</div>
+                    <div class="records-list" id="records-list">
+                        <div class="record-item">
+                            <div class="record-info">
+                                <span class="record-player">хуесос</span>
+                                <span class="record-date">2025-XX-XX</span>
+                            </div>
+                            <div class="record-progress">5489348%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="copy-notification" id="copy-notification">Copied!</div>
+
+    <script src="../js/level.js"></script>
+</body>
+</html>

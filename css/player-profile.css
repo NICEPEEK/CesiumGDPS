@@ -1,0 +1,384 @@
+
+#player-profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.profile-section {
+    margin-bottom: 40px;
+    background-color: var(--sidebar-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+.profile-section h2 {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+.stat-card {
+    background-color: var(--accent-color);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #8b5cf6;
+    margin-bottom: 5px;
+}
+.stat-label {
+    font-size: 14px;
+    color: #aaa;
+}
+.back-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+.player-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.player-avatar-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid var(--accent-color);
+}
+.player-name-container {
+    flex-grow: 1;
+}
+.player-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.player-rank {
+    font-size: 18px;
+    color: #aaa;
+}
+.mod-badge-large {
+    background-color: #6a1b9a;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+.player-banner-large {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    position: relative;
+}
+.player-banner-large .player-rank-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+@media (max-width: 768px) {
+    .player-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    .player-banner-large {
+        height: 150px;
+    }
+}
+.player-card-container {
+    background-color: var(--sidebar-color);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+.player-card-container:hover {
+    transform: translateY(-5px);
+}
+.player-banner-large {
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+}
+.player-banner-large .profile-banner {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+.player-rank-badge-large {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+.profile-main-info {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+    position: relative;
+}
+.profile-avatar-wrapper-large {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+}
+.profile-avatar-large {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid var(--accent-color);
+    background-size: cover;
+    background-position: center;
+}
+.stat-card {
+    transition: all 0.3s ease;
+    transform: translateY(0);
+}
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    background-color: var(--hover-color);
+}
+.level-card {
+    transition: all 0.3s ease;
+}
+.level-card:hover {
+    transform: translateX(5px);
+    background-color: var(--hover-color);
+}
+.progress-bar-container {
+    height: 20px;
+    background-color: var(--accent-color);
+    border-radius: 10px;
+    margin: 5px 0;
+    position: relative;
+    overflow: hidden;
+}
+.progress-bar {
+    height: 100%;
+    background-color: #6a1b9a;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+.progress-bar-container span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: white;
+    text-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+.video-link {
+    display: inline-block;
+    margin-top: 5px;
+    color: #8b5cf6;
+    text-decoration: none;
+    font-size: 14px;
+}
+.video-link:hover {
+    text-decoration: underline;
+}
+.clickable-level {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+.clickable-level:hover {
+    transform: translateX(5px);
+    background-color: var(--hover-color);
+}
+.clickable-level .level-actions {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    color: var(--text-color);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+.clickable-level:hover .level-actions {
+    opacity: 1;
+    color: #8b5cf6;
+}
+.level-date {
+    font-size: 13px;
+    color: #aaa;
+    margin-top: 3px;
+}
+.levels-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: #aaa;
+    font-style: italic;
+}
+@keyframes goldGlow {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        transform: scale(1.05);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        transform: scale(1);
+    }
+}
+.level-position.first-place {
+    background-color: gold;
+    color: #000;
+    font-weight: bold;
+    animation: goldGlow 2s infinite;
+}
+.stat-card .stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+}
+.stat-card .stat-label {
+    font-size: 14px;
+    color: #aaa;
+}
+.progress-level-card {
+    background-color: var(--accent-color);
+    border-radius: 8px;
+    display: flex;
+    transition: transform 0.2s;
+    height: 120px;
+    overflow: hidden;
+}
+.progress-level-card:hover {
+    transform: translateX(5px);
+}
+.progress-level-preview {
+    width: 200px;
+    height: 100%;
+    background-color: #000;
+    position: relative;
+    flex-shrink: 0;
+}
+.progress-level-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.progress-level-position {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+.progress-level-info {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.progress-level-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.progress-level-phase {
+    color: #aaa;
+    font-size: 14px;
+}
+.progress-level-percent {
+    color: #ffffff;
+    font-weight: bold;
+    margin-top: 5px;
+}
+.progress-level-points {
+    margin-top: 5px;
+    font-size: 14px;
+}
+.progress-level-date {
+    color: #aaa;
+    font-size: 12px;
+    margin-top: 5px;
+}
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+.section-count {
+    background-color: var(--accent-color);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #aaa;
+}
+.progress-level-name .progress-percent {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+

@@ -1,0 +1,64 @@
+.notification {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    max-width: 90%;
+    text-align: center;
+    word-break: break-word;
+}
+
+.notification.show {
+    bottom: 20px;
+    opacity: 1;
+}
+
+.notification.error {
+    background-color: #F44336;
+}
+
+.notification.warning {
+    background-color: #FF9800;
+}
+
+.notification.info {
+    background-color: #2196F3;
+}
+
+@keyframes sideIn {
+    from {
+        bottom: -100px;
+        opacity: 0;
+    }
+    to {
+        bottom: 20px;
+        opacity: 1;
+    }
+}
+
+@keyframes sideOut {
+    from {
+        bottom: 20px;
+        opacity: 1;
+    }
+    to {
+        bottom: -100px;
+        opacity: 0;
+    }
+}
+
+.notification.show {
+    animation: sideIn 0.5s forwards;
+}
+
+.notification.hide {
+    animation: sideOut 0.5s forwards;
+}

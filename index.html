@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CesiumList</title>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/modal.css">
+    <link rel="stylesheet" href="/css/content.css">
+    <link rel="stylesheet" href="/css/notification.css">
+    <link rel="stylesheet" href="/css/records.css">
+    <link rel="stylesheet" href="/css/filter.css">
+    <link rel="stylesheet" href="/css/user-panel.css">
+    <link rel="stylesheet" href="/css/profile-preview.css">
+    <link rel="stylesheet" href="/css/level-edit.css">
+    <link rel="stylesheet" href="/css/top-players.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/blitzkrieg.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">CesiumList</div>
+            <nav class="menu">
+                <button class="menu-item active" data-tab="demon-list">Demon List</button>
+                <button class="menu-item" data-tab="top-players">Top Players</button>
+                <button class="menu-item" data-tab="user-panel">Dashboard</button>
+                <button class="menu-item" data-tab="blitzkrieg">Blitzkrieg</button>
+                <a href="https://discord.gg/cJSePhcskx" class="record-btn" target="_blank">
+                <i class="fab fa-google"></i>Отправить Рекорд
+                <a href="https://discord.gg/cJSePhcskx" class="discord-btn" target="_blank">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <button class="filter-btn" id="filter-btn">
+                <i class="fas fa-filter"></i>
+            </button>
+
+            <div class="filter-overlay" id="filter-overlay"></div>
+            <div class="filter-panel" id="filter-panel">
+                <div class="filter-header">
+                    <h3><i class="fas fa-filter"></i> Filters</h3>
+                    <button class="close-filter">&times;</button>
+                </div>
+                
+                <div class="filter-body">
+                    <div class="filter-group">
+                        <label for="search"><i class="fas fa-search"></i> Search by name:</label>
+                        <input type="text" id="search" placeholder="Enter level name...">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label><i class="fas fa-layer-group"></i> Phases:</label>
+                        <div class="phase-tags" id="phase-tags">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-footer">
+                    <button class="filter-action reset-filter">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
+                    <button class="filter-action apply-filter">
+                        <i class="fas fa-check"></i> Apply
+                    </button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="archive">
+    <div class="archive-header">
+        <button class="archive-tab-btn active" data-type="official">Official Archive</button>
+        <button class="archive-tab-btn" data-type="actual">Actual Archive</button>
+    </div>
+    <div class="levels-container" id="archive-levels-container">
+    </div>
+</div>
+
+                            <div class="tab-content" id="top-players">
+                    <h2>Top Players</h2>
+                    <div id="players-list"></div>
+                </div>
+
+                <div class="tab-content" id="blitzkrieg">
+    <div class="blitzkrieg-container">
+        <div class="blitzkrieg-controls">
+            <div class="session-controls">
+                <button id="new-session-btn" class="user-button primary"> New Session</button>
+                <select id="session-select" class="user-input">Select a session</option></select>
+                <button id="delete-session-btn" class="user-button danger">Delete</button>
+            </div>
+            
+            <div class="input-group">
+                <label for="start-positions"></i> Start Positions (taking into account 100%):</label>
+                <textarea id="start-positions" class="user-textarea" rows="3" placeholder="e.g. 3, 49, 58., 78.., 100"></textarea>
+            </div>
+
+            <button id="generate-btn" class="user-button primary">Blitzkrieg!</button>
+        </div>
+        
+        <div id="blitzkrieg-stages" class="blitzkrieg-stages"></div>
+    </div>
+</div>
+
+            <div class="tab-content active" id="demon-list">
+                <div class="levels-container" id="levels-container">
+                </div>
+            </div>
+            
+            <div class="tab-content" id="user-panel">
+                <div id="auth-section" class="user-panel-container">
+                    <div class="user-panel-card">
+                        <h2 class="user-panel-title">Login</h2>
+                        <div class="user-input-group">
+                            <input type="text" id="login-username" placeholder="Username" class="user-input">
+                        </div>
+                        <div class="user-input-group">
+                            <input type="password" id="login-password" placeholder="Password" class="user-input">
+                        </div>
+                        <button id="login-button" class="user-button primary">
+                            Login
+                        </button>
+                        <div id="login-message" class="user-message"></div>
+                    </div>
+                </div>
+                </template>
+
+                <div id="profile-section" class="user-panel-container" style="display: none;">
+                    <div class="profile-preview-container">
+                        <div class="profile-banner-container">
+                            <button id="clear-banner" class="user-button danger small">Remove Banner</button>
+                            <div class="profile-banner" id="banner-preview"></div>
+                            <label for="banner-input" class="banner-upload-label">
+                                <i class="fas fa-camera"></i> Change banner
+                            </label>
+                            <input type="file" id="banner-input" accept="image/*" class="hidden-upload">
+                        </div>
+                        
+                        <div class="profile-main-info">
+                            <div class="profile-avatar-wrapper">
+                                <div class="profile-avatar" id="avatar-preview"></div>
+                                <label for="avatar-input" class="avatar-upload-label">
+                                    <i class="fas fa-camera"></i>
+                                </label>
+                                <input type="file" id="avatar-input" accept="image/*" class="hidden-upload">
+                            </div>
+                            
+                            <div class="profile-text-info">
+                                <div class="name-flag-wrapper">
+                                    <div class="username-container">
+                                        <div class="username-content" id="preview-username">
+                                            <span class="username-text">Username</span>
+                                        </div>
+                                    </div>
+                                    <div class="flag-container">
+                                        <div class="country-flag" id="country-flag"></div>
+                                    </div>
+                                </div>
+                                <div class="description-container">
+                                    <div class="profile-description" id="preview-description">No description yet</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-panel-card">
+                        <h2 class="user-panel-title">Profile Settings</h2>
+                        
+                        <div class="user-input-group">
+                            <label for="profile-username">Username</label>
+                            <input type="text" id="profile-username" class="user-input" readonly>
+                        </div>
+                        
+                        <div class="user-input-group">
+                            <label for="profile-password">New Password</label>
+                            <input type="password" id="profile-password" placeholder="Leave empty to keep current" class="user-input">
+                        </div>
+                        
+                        <div class="user-input-group">
+                            <label for="profile-description">Description (max 80 chars)</label>
+                            <textarea id="profile-description" class="user-textarea" rows="4" maxlength="80"></textarea>
+                            <div class="char-counter"><span id="char-count">0</span>/80</div>
+                        </div>
+                        
+                        <div class="hidden-urls">
+                            <input type="hidden" id="profile-avatar-url">
+                            <input type="hidden" id="profile-banner-url">
+                            <input type="hidden" id="profile-role">
+                        </div>
+                        
+                        <div class="user-actions">
+                            <button id="update-profile-button" class="user-button primary">
+                                Save Changes
+                            </button>
+                            <button id="logout-button" class="user-button danger">
+                                Logout
+                            </button>
+                        </div>
+                        
+                        <div id="profile-message" class="user-message"></div>
+                    </div>
+                </div>
+
+                <div id="new-record-modal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3 id="new-record-modal-title">Add New Record</h3>
+        </div>
+        <div class="modal-body">
+            <div class="level-edit-grid">
+                <div class="level-edit-group">
+                    <label for="new-record-username">Username</label>
+                    <input type="text" id="new-record-username">
+                </div>
+                <div class="level-edit-group">
+                    <label for="new-record-progress">Progress (%)</label>
+                    <input type="number" id="new-record-progress" min="0" max="100" value="100">
+                </div>
+                <div class="level-edit-group">
+                    <label for="new-record-date">Date (YYYY-DD-MM)</label>
+                    <input type="text" id="new-record-date" placeholder="2025-07-06">
+                </div>
+                <div class="level-edit-group">
+                    <label for="new-record-video">Video Link</label>
+                    <input type="text" id="new-record-video">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="cancel-new-record-btn" class="user-button danger">Cancel</button>
+            <button id="save-new-record-btn" class="user-button primary">Save</button>
+        </div>
+    </div>
+</div>
+<div id="mod-section" class="user-panel-container" style="display: none;">
+    <div class="user-panel-card">
+        <h2 class="user-panel-title">Mod Tools</h2>
+        <button id="edit-order-btn" class="user-button primary">
+            Change the order of levels
+        </button>
+        <button id="create-level-btn" class="user-button primary">
+            Create New Level
+        </button>
+    </div>
+            </div>
+        </main>
+    </div>
+    <div id="order-edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Levels Order</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="editable-levels-container" class="levels-container"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="save-order-btn" class="user-button primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+        <div id="level-edit-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Level Data</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="level-select-container" class="levels-container"></div>
+                    <div id="level-edit-form" style="display: none;">
+            <div class="level-edit-grid">
+                <div class="level-edit-group">
+                    <label for="edit-name">Level Name</label>
+                    <input type="text" id="edit-name">
+                </div>
+                <div class="level-edit-group">
+                    <label for="edit-phase">Phase</label>
+                    <input type="number" id="edit-phase" min="1">
+                </div>
+                <div class="level-edit-group">
+                    <label for="edit-ggdl-phase">GDDP Phase</label>
+                    <input type="number" id="edit-ggdl-phase" min="0">
+                </div>
+                <div class="level-edit-group">
+                    <label for="edit-points">Points</label>
+                    <input type="number" id="edit-points" step="0.1">
+                </div>
+                <div class="level-edit-group">
+                    <label for="edit-percent">List Percent</label>
+                    <input type="number" id="edit-percent" step="0.1" min="0" max="100">
+                </div>
+                <div class="level-edit-group">
+                    <label for="edit-skills">Skill Sets (comma-separated)</label>
+                    <input type="text" id="edit-skills" placeholder="wave, straight fly, memory">
+                </div>
+                <div class="level-edit-group" style="grid-column: span 2;">
+                    <h4>Records</h4>
+                    <div class="player-list" id="player-list"></div>
+                    <button id="add-record-btn" class="user-button primary small">Add New Record</button>
+                </div>
+            </div>
+            <div class="level-edit-actions">
+                <button id="save-level-btn" class="user-button primary">Save Changes</button>
+            </div>
+        </div>
+            
+            <div id="record-edit-modal" class="modal" style="display: none;">
+                <div class="modal-content" style="max-width: 500px;">
+                    <div class="modal-header">
+                        <h3 id="record-modal-title">Edit Record</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="level-edit-grid">
+                                <div class="level-edit-group">
+                                    <label for="record-username">Username</label>
+                                    <input type="text" id="record-username">
+                                </div>
+                                <div class="level-edit-group">
+                                    <label for="record-progress">Progress (%)</label>
+                                    <input type="number" id="record-progress" min="0" max="100" value="100">
+                                </div>
+                                <div class="level-edit-group">
+                                    <label for="record-date">Date (YYYY-DD-MM)</label>
+                                    <input type="text" id="record-date">
+                                </div>
+                                <div class="level-edit-group">
+                                    <label for="record-video">Video Link</label>
+                                    <input type="text" id="record-video">
+                                </div>
+                        </div>
+                        <div class="level-edit-actions">
+                            <button id="save-record-btn" class="user-button primary">Save</button>
+                            <button id="cancel-record-btn" class="user-button danger">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div id="level-edit-form" style="display: none;">
+            <div class="level-edit-grid">
+                <div class="level-edit-group">
+                    <label for="edit-name">Level Name</label>
+                    <input type="text" id="edit-name">
+                </div>
+                <div class="level-edit-group">
+                    <label for="edit-phase">Phase</label>
+                    <input type="number" id="edit-phase" min="1">
+                </div>
+                <div class="level-edit-group">
+                    <label for="edit-points">Points</label>
+                    <input type="number" id="edit-points" step="0.1">
+                </div>
+                <div class="level-edit-group">
+                    <label for="edit-percent">List Percent</label>
+                    <input type="number" id="edit-percent" step="0.1" min="0" max="100">
+                </div>
+                <div class="level-edit-group">
+                    <label for="edit-skills">Skill Sets (comma separated)</label>
+                    <input type="text" id="edit-skills">
+                </div>
+                <div class="level-edit-group" style="grid-column: span 2;">
+                    <h4>Records</h4>
+                    <div class="player-list" id="player-list"></div>
+                    <button id="add-record-btn" class="user-button primary small">Add New Record</button>
+                </div>
+            </div>
+            <div class="level-edit-actions">
+                <button id="save-level-btn" class="user-button primary">Save Changes</button>
+            </div>
+        </div>
+        <div id="new-level-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Create New Level</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="level-edit-grid">
+                <div class="level-edit-group">
+                    <label for="new-level-id">ID</label>
+                    <input type="text" id="new-level-id">
+                </div>
+                <div class="level-edit-group">
+                    <label for="new-name">Level Name</label>
+                    <input type="text" id="new-name">
+                </div>
+                <div class="level-edit-group">
+                    <label for="new-phase">Phase</label>
+                    <input type="number" id="new-phase" min="1" value="1">
+                </div>
+                <div class="level-edit-group">
+                    <label for="new-ggdl-phase">GDDP Phase</label>
+                    <input type="number" id="new-ggdl-phase" min="0" value="0">
+                </div>
+                <div class="level-edit-group">
+                    <label for="new-points">Points</label>
+                    <input type="number" id="new-points" step="0.1" value="0">
+                </div>
+                <div class="level-edit-group">
+                    <label for="new-percent">List Percent</label>
+                    <input type="number" id="new-percent" step="0.1" min="0" max="100" value="100">
+                </div>
+                <div class="level-edit-group">
+                    <label for="new-skills">Skill Sets (comma-separated)</label>
+                    <input type="text" id="new-skills">
+                </div>
+            </div>
+            <div class="level-edit-group">
+                <h4>Records</h4>
+                <div class="player-list" id="new-player-list"></div>
+                <button id="add-new-record-btn" class="user-button primary small">Add New Record</button>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="save-new-level-btn" class="user-button primary">Create Level</button>
+            <button id="cancel-new-level-btn" class="user-button danger">Cancel</button>
+        </div>
+    </div>
+</div>
+    <script src="../js/script.js"></script>
+    <script src="../js/level_creation.js"></script>
+    <script src="../js/top.js"></script>
+    <script src="../js/blitzkrieg.js"></script>
+</body>
+</html>

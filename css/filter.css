@@ -1,0 +1,179 @@
+.filter-btn {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--filter-btn-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    z-index: 5;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s;
+}
+
+.filter-btn:hover {
+    background-color: #A52A2A;
+    transform: scale(1.1);
+}
+
+.filter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 10;
+    display: none;
+}
+
+.filter-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--filter-panel-color);
+    border-radius: 10px;
+    z-index: 11;
+    width: 90%;
+    max-width: 450px;
+    display: none;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--filter-accent);
+    color: white;
+}
+
+.filter-header h3 {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.close-filter {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 10px;
+    transition: transform 0.2s;
+}
+
+.close-filter:hover {
+    transform: scale(1.2);
+}
+
+.filter-body {
+    padding: 20px;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #ccc;
+}
+
+.filter-group input[type="text"] {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #444;
+    border: 1px solid #555;
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.filter-group input[type="text"]:focus {
+    border-color: var(--filter-accent);
+    outline: none;
+}
+
+.phase-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.phase-tag {
+    padding: 6px 12px;
+    background-color: #444;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.phase-tag:hover {
+    background-color: #555;
+}
+
+.phase-tag.selected {
+    background-color: var(--filter-accent);
+    color: white;
+}
+
+.filter-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px 20px;
+    background-color: #2a2a2a;
+    border-top: 1px solid #444;
+}
+
+.filter-action {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.reset-filter {
+    background-color: #444;
+    color: white;
+}
+
+.reset-filter:hover {
+    background-color: #555;
+}
+
+.apply-filter {
+    background-color: var(--filter-accent);
+    color: white;
+}
+
+.apply-filter:hover {
+    background-color: #7b2cbf;
+}
