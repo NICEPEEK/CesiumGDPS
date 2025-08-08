@@ -1,15 +1,16 @@
 {
     "id": 156,
-    "name": "MultyplY",
+    "name": "M u l t y p l Y",
     "author": "Maxon",
     "creators": ["Maxon"],
     "verifier": "Maxon",
     "verification": "",
     "showcase": "",
     "percentToQualify": 100,
-    "password": "Not Copyable",
     "records": [
-        {
-        }
-    ]
+        {"user": "NICEPEEK",
+        "link": "",
+        "percent": 100,
+        "hz": 480 }
+]
 }

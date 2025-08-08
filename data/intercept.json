@@ -4,12 +4,13 @@
     "author": "Mina",
     "creators": ["Mina"],
     "verifier": "Mina",
-    "verification": "",
+    "verification": "https://www.youtube.com/watch?v=p-WokI1J9Zo",
     "showcase": "",
     "percentToQualify": 100,
-    "password": "Not Copyable",
     "records": [
-        {
-        }
-    ]
+                {"user": "NICEPEEK",
+        "link": "",
+        "percent": 100,
+        "hz": 480 }
+]
 }
