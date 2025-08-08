@@ -1,0 +1,21 @@
+{
+  "name": "EternalList",
+  "version": "1.0.0",
+  "description": "# FAQ",
+  "main": "index.js",
+  "scripts": { 
+  "start": "node index.js",
+  "build": "echo 'No build step required' && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NICEPEEK2/Cesium_List.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NICEPEEK2/Cesium_List/issues"
+  },
+  "homepage": "https://github.com/NICEPEEK2/Cesium_List#readme"
+}
