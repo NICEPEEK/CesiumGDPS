@@ -8,34 +8,39 @@
     <meta property="og:description"
         content="Лист сложнейших уровней на WEGDPS." />
     <meta property="og:url" content="https://CesiumGDPS.github.io" />
-    <meta property="og:image" content="/welistico.png" />
+    <!-- Исправлен путь для Open Graph изображения -->
+    <meta property="og:image" content="welistico.png" />
     <title>CesiumList</title>
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="/css/typography.css" />
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="/css/pages/list.css" />
-    <link rel="stylesheet" type="text/css" href="/css/pages/leaderboard.css" />
-    <link rel="stylesheet" type="text/css" href="/css/pages/roulette.css" />
-    <link rel="stylesheet" type="text/css" href="/css/components/nav.css" />
-    <link rel="stylesheet" type="text/css" href="/css/components/btn.css" />
-    <link rel="stylesheet" type="text/css" href="/css/components/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="/css/components/select.css" />
-    <link rel="stylesheet" type="text/css" href="/css/pages/auth.css" />
+    <!-- Убраны слеши в начале путей -->
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/typography.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <link rel="stylesheet" type="text/css" href="css/pages/list.css" />
+    <link rel="stylesheet" type="text/css" href="css/pages/leaderboard.css" />
+    <link rel="stylesheet" type="text/css" href="css/pages/roulette.css" />
+    <link rel="stylesheet" type="text/css" href="css/components/nav.css" />
+    <link rel="stylesheet" type="text/css" href="css/components/btn.css" />
+    <link rel="stylesheet" type="text/css" href="css/components/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="css/components/select.css" />
+    <link rel="stylesheet" type="text/css" href="css/pages/auth.css" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.prod.js"></script>
     <script src="https://unpkg.com/vue-router@4.0.14/dist/vue-router.global.prod.js"></script>
-    <script type="module" src="/js/main.js"></script>
-    <script src="/js/components/select.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script src="js/components/select.js"></script>
+    <!-- Добавлен base tag для корректной работы относительных путей -->
+    <base href="./">
 </head>
 <body id="app">
     <div class="root" :class="{ dark: store.dark }">
         <header class="surface">
             <div class="logo">
-                <img src="/welistico.png" alt="logo" />
+                <!-- Исправлен путь к изображению -->
+                <img src="welistico.png" alt="logo" />
             </div>
             <nav class="nav">
                 <div class="droplist">
@@ -65,13 +70,14 @@
                         class="nav__icon"
                         @click.prevent="store.toggleDark()"
                     >
+                        <!-- Исправлены пути к иконкам -->
                         <img
-                            :src="store.dark ? '/assets/light.svg' : '/assets/dark.svg'"
+                            :src="store.dark ? 'assets/light.svg' : 'assets/dark.svg'"
                             alt=""
                         />
                     </button>
                     <a class="nav__icon" href="https://discord.gg/m5EjdPcNSz">
-                        <img src="/assets/discord.svg" alt="Discord Logo" />
+                        <img src="assets/discord.svg" alt="Discord Logo" />
                     </a>
                     <a class="nav__cta type-label-lg"
                         href="https://forms.gle/fsrvzfQGfKepF6Kt6"
