@@ -1,18 +1,33 @@
 import { round, score } from './score.js';
 
 /**
- * Path to directory containing `_list.json` and all levels
+ * Path to directory containing JSON data files
+ * Исправлено: используем относительный путь 'data' вместо абсолютного '/data'
  */
-const dir = '/data';
+const dir = 'data';
 
-export async function fetchList() {
-    const listResult = await fetch(`${dir}/_list.json`);
+/**
+ * Общая функция для загрузки списков (устранение дублирования кода)
+ */
+async function fetchListData(fileName) {
     try {
+        const listResult = await fetch(`${dir}/${fileName}`);
+        // Добавлена проверка статуса ответа
+        if (!listResult.ok) {
+            throw new Error(`HTTP error! status: ${listResult.status}`);
+        }
+        
         const list = await listResult.json();
-        return await Promise.all(
+        
+        const results = await Promise.all(
             list.map(async (path, rank) => {
-                const levelResult = await fetch(`${dir}/${path}.json`);
                 try {
+                    const levelResult = await fetch(`${dir}/${path}.json`);
+                    // Проверка статуса для каждого уровня
+                    if (!levelResult.ok) {
+                        throw new Error(`HTTP error! status: ${levelResult.status}`);
+                    }
+                    
                     const level = await levelResult.json();
                     return [
                         {
@@ -24,95 +39,49 @@ export async function fetchList() {
                         },
                         null,
                     ];
-                } catch {
-                    console.error(`Failed to load level #${rank + 1} ${path}.`);
+                } catch (e) {
+                    console.error(`Failed to load level #${rank + 1} ${path}: ${e.message}`);
                     return [null, path];
                 }
-            }),
+            })
         );
-    } catch {
-        console.error(`Failed to load list.`);
+        
+        return results;
+    } catch (e) {
+        console.error(`Failed to load ${fileName}: ${e.message}`);
         return null;
     }
 }
 
-export async function fetchCHList() {
-    const listResult = await fetch(`${dir}/_chlist.json`);
-    try {
-        const list = await listResult.json();
-        return await Promise.all(
-            list.map(async (path, rank) => {
-                const levelResult = await fetch(`${dir}/${path}.json`);
-                try {
-                    const level = await levelResult.json();
-                    return [
-                        {
-                            ...level,
-                            path,
-                            records: level.records.sort(
-                                (a, b) => b.percent - a.percent,
-                            ),
-                        },
-                        null,
-                    ];
-                } catch {
-                    console.error(`Failed to load level #${rank + 1} ${path}.`);
-                    return [null, path];
-                }
-            }),
-        );
-    } catch {
-        console.error(`Failed to load list.`);
-        return null;
-    }
-}
-
-export async function fetchPLList() {
-    const listResult = await fetch(`${dir}/_pllist.json`);
-    try {
-        const list = await listResult.json();
-        return await Promise.all(
-            list.map(async (path, rank) => {
-                const levelResult = await fetch(`${dir}/${path}.json`);
-                try {
-                    const level = await levelResult.json();
-                    return [
-                        {
-                            ...level,
-                            path,
-                            records: level.records.sort(
-                                (a, b) => b.percent - a.percent,
-                            ),
-                        },
-                        null,
-                    ];
-                } catch {
-                    console.error(`Failed to load level #${rank + 1} ${path}.`);
-                    return [null, path];
-                }
-            }),
-        );
-    } catch {
-        console.error(`Failed to load list.`);
-        return null;
-    }
-}
+// Упрощенные экспорты через общую функцию
+export const fetchList = () => fetchListData('_list.json');
+export const fetchCHList = () => fetchListData('_chlist.json');
+export const fetchPLList = () => fetchListData('_pllist.json');
 
 export async function fetchEditors() {
     try {
         const editorsResults = await fetch(`${dir}/_editors.json`);
-        const editors = await editorsResults.json();
-        return editors;
-    } catch {
+        // Добавлена проверка статуса
+        if (!editorsResults.ok) {
+            throw new Error(`HTTP error! status: ${editorsResults.status}`);
+        }
+        return await editorsResults.json();
+    } catch (e) {
+        console.error(`Failed to load editors: ${e.message}`);
         return null;
     }
 }
 
 export async function fetchLeaderboard() {
     const list = await fetchList();
+    if (!list) {
+        console.error("Leaderboard loading aborted: main list failed");
+        return [null, ["Main list load failed"]];
+    }
 
     const scoreMap = {};
     const errs = [];
+    
     list.forEach(([level, err], rank) => {
         if (err) {
             errs.push(err);
@@ -120,14 +89,17 @@ export async function fetchLeaderboard() {
         }
 
         // Verification
+        const verifierKey = level.verifier.toLowerCase();
         const verifier = Object.keys(scoreMap).find(
-            (u) => u.toLowerCase() === level.verifier.toLowerCase(),
+            u => u.toLowerCase() === verifierKey
         ) || level.verifier;
+        
         scoreMap[verifier] ??= {
             verified: [],
             completed: [],
             progressed: [],
         };
+        
         const { verified } = scoreMap[verifier];
         verified.push({
             rank: rank + 1,
@@ -138,14 +110,17 @@ export async function fetchLeaderboard() {
 
         // Records
         level.records.forEach((record) => {
+            const userKey = record.user.toLowerCase();
             const user = Object.keys(scoreMap).find(
-                (u) => u.toLowerCase() === record.user.toLowerCase(),
+                u => u.toLowerCase() === userKey
             ) || record.user;
+            
             scoreMap[user] ??= {
                 verified: [],
                 completed: [],
                 progressed: [],
             };
+            
             const { completed, progressed } = scoreMap[user];
             if (record.percent === 100) {
                 completed.push({
@@ -167,10 +142,8 @@ export async function fetchLeaderboard() {
         });
     });
 
-    // Wrap in extra Object containing the user and total score
     const res = Object.entries(scoreMap).map(([user, scores]) => {
-        const { verified, completed, progressed } = scores;
-        const total = [verified, completed, progressed]
+        const total = Object.values(scores)
             .flat()
             .reduce((prev, cur) => prev + cur.score, 0);
 
@@ -181,6 +154,5 @@ export async function fetchLeaderboard() {
         };
     });
 
-    // Sort by total score
     return [res.sort((a, b) => b.total - a.total), errs];
 }
