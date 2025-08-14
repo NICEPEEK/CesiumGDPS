@@ -11,6 +11,11 @@
         {"user": "NICEPEEK",
         "link": "",
         "percent": 100,
-        "hz": 480 }
+        "hz": 480 },
+        
+       {"user": "Кулибяка",
+        "link": "https://youtu.be/X2e_I0r5WQE",
+        "percent": 100,
+        "hz": 244 }
 ]
 }
